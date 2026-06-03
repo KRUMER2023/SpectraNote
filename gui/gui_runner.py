@@ -1,6 +1,3 @@
-
-# gui_runner.py
-
 import tkinter as tk
 from tkinter import Button, Canvas
 import ctypes
@@ -22,14 +19,16 @@ class SpectraToolbar:
         self.base_w = layout.measurements["base_width"]
         self.base_h = layout.measurements["base_height"]
 
-        self.root = self._build_window(troot)
-
-        self.canvas = self._build_canvas()
 
         # layout positions
         self.toogler_positions = layout.positions["Toogler"]
         self.left_positions = layout.positions["Left_panel"]
         self.right_positions = layout.positions["Right_panel"]
+
+        self.root = self._build_window(troot)
+
+        self.canvas = self._build_canvas()
+
 
         # storing UI elements
         self.main_bg_items = []
@@ -58,7 +57,7 @@ class SpectraToolbar:
             "chatbot":          lambda: print("chatbot"),
             "summary":          lambda: self._extract_and_close("summary"),
             "translator":       lambda: self._extract_and_close("translator"),
-            "search":           lambda: self._extract_and_close("search"),
+            "snapshot":           lambda: self._extract_and_close("snapshot"),
             "youtube":          lambda: self._extract_and_close("YT"),
         }
 
@@ -83,8 +82,18 @@ class SpectraToolbar:
 
         self.create_right_panel()
 
+
         for obj in self.main_bg_items:
             self.canvas.tag_raise(obj)
+            
+
+        if self.app_data.get_Toogle_left():
+            # simulate toggle left
+            # trick: to run it successfully, ensure last btn is hidden so it expands
+            self.toggle_left_panel()
+
+        if self.app_data.get_Toogle_right():
+            self.toggle_right_panel()
 
         self.enable_dragging()
 
@@ -94,7 +103,7 @@ class SpectraToolbar:
         center_x = int((self.screen_w - self.width) / 2)
         win.geometry(f"{self.width}x{self.height}+{center_x}+0")
         win.overrideredirect(True)
-        win.wm_attributes("-transparentcolor", "#000000")
+        win.wm_attributes("-transparentcolor", "#D9D9DA")
         win.wm_attributes("-topmost", True)
 
         try:
@@ -113,14 +122,17 @@ class SpectraToolbar:
     def _build_canvas(self):
         canvas = Canvas(
             self.root,
-            bg="#000000",
+            bg="#D9D9DA",
             width=self.width,
             height=self.height,
             bd=0,
             highlightthickness=0,
             relief="ridge"
         )
+
+
         canvas.place(x=0, y=0)
+       
         return canvas
 
     # -------------------------------------------------------------------------
@@ -128,6 +140,8 @@ class SpectraToolbar:
     # -------------------------------------------------------------------------
     def create_main_background(self):
         for name in self.toogler_positions["bg"].keys():
+            if name == "trans_bg":
+                continue
             img = self.canvas.create_image(
                 self.width / 2,
                 self.height / 2,
@@ -220,6 +234,7 @@ class SpectraToolbar:
             for b in self.left_objs["button"].values(): b.place_forget()
             for bg in self.left_objs["bg"].values():
                 self.canvas.itemconfigure(bg, state="hidden")
+            self.app_data.set_Toogle_left(False)
         else:
             self.toggle_buttons["toggle_left"].configure(
                 image=self.loader.images["toggle_right"]
@@ -232,6 +247,7 @@ class SpectraToolbar:
                     x=x*self.scale, y=y*self.scale,
                     width=42*self.scale, height=46*self.scale
                 )
+            self.app_data.set_Toogle_left(True)
 
     def toggle_right_panel(self):
         keys = list(self.right_objs["button"].keys())
@@ -244,6 +260,7 @@ class SpectraToolbar:
             for b in self.right_objs["button"].values(): b.place_forget()
             for bg in self.right_objs["bg"].values():
                 self.canvas.itemconfigure(bg, state="hidden")
+            self.app_data.set_Toogle_right(False)
         else:
             self.toggle_buttons["toggle_right"].configure(
                 image=self.loader.images["toggle_left"]
@@ -256,6 +273,7 @@ class SpectraToolbar:
                     x=x*self.scale, y=y*self.scale,
                     width=42*self.scale, height=46*self.scale
                 )
+            self.app_data.set_Toogle_right(True)
 
     # -------------------------------------------------------------------------
     # DRAGGING (Copied from gui_main_circle.py with same calculations)

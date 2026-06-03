@@ -1,5 +1,3 @@
-# gui_loader.py
-
 from tkinter import PhotoImage
 from pathlib import Path
 
@@ -12,6 +10,7 @@ class ImageLoader:
     def __init__(self):
 
         # Base path: gui/assets/frame0/
+        self.ASSETS_PATH = Path(__file__).parent / "assets" / "frame0"
         self.ASSETS_PATH = Path(__file__).parent / "assets" / "frame0"
 
         self.image_bg_circle = PhotoImage(file=self.asset("image_5.png"))
@@ -42,7 +41,7 @@ class ImageLoader:
         self.image_chatbot =  PhotoImage(file=self.asset("button_5.png"))
         self.image_summary =  PhotoImage(file=self.asset("button_4.png"))
         self.image_translator =  PhotoImage(file=self.asset("button_3.png"))
-        self.image_search =  PhotoImage(file=self.asset("button_2.png"))
+        self.image_snapshot =  PhotoImage(file=self.asset("button_2.png"))
         self.image_youtube =  PhotoImage(file=self.asset("button_1.png"))
 
         self.images ={
@@ -73,7 +72,7 @@ class ImageLoader:
             "chatbot":          self.image_chatbot,
             "summary":          self.image_summary,
             "translator":       self.image_translator,
-            "search":           self.image_search,
+            "snapshot":           self.image_snapshot,
             "youtube":          self.image_youtube,
             
             "left_bg_bg":       self.image_panel_left_1,

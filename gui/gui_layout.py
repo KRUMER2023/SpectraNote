@@ -1,4 +1,3 @@
-# gui_layout.py
 
 class Layout:
 
@@ -59,7 +58,7 @@ class Layout:
                     "chatbot":    (123*s, 12*s),
                     "summary":    (177*s, 12*s),
                     "translator": (231*s, 12*s),
-                    "search":     (285*s, 12*s),
+                    "snapshot":     (285*s, 12*s),
                     "youtube":    (339*s, 12*s)
                 },
                 

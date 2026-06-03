@@ -3,3 +3,8 @@ pyautogui
 python-docx
 screeninfo
 requests
+pystray
+Pillow
+pygetwindow
+pyrect
+python-dotenv

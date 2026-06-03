@@ -1,4 +1,3 @@
-# doc_manager.py
 from docx import Document
 import os
 

@@ -1,5 +1,3 @@
-# gui_runner.py
-
 import tkinter as tk
 from tkinter import Button, Canvas
 import ctypes
