@@ -5,136 +5,6 @@ import os
 
 class SpectraToolbar:
 
-    def __init__(self, app_data, loader, layout, troot):
-
-        self.app_data = app_data
-        self.loader = loader
-        self.layout = layout
-
-        self.width = layout.measurements["width"]
-        self.height = layout.measurements["height"]
-        self.screen_w = layout.measurements["screen_w"]
-        self.screen_h = layout.measurements["screen_h"]
-        self.scale = layout.measurements["scale"]
-        self.base_w = layout.measurements["base_width"]
-        self.base_h = layout.measurements["base_height"]
-
-
-        # layout positions
-        self.toogler_positions = layout.positions["Toogler"]
-        self.left_positions = layout.positions["Left_panel"]
-        self.right_positions = layout.positions["Right_panel"]
-
-        self.root = self._build_window(troot)
-
-        self.canvas = self._build_canvas()
-
-
-        # storing UI elements
-        self.main_bg_items = []
-        self.left_objs = {"bg": {}, "button": {}}
-        self.right_objs = {"bg": {}, "button": {}}
-        self.toggle_buttons = {}
-
-        # Created dictionary of actions (LIKE app.py)
-        self.actions = {
-            # toggle buttons
-            "toggle_left":      self.toggle_left_panel,
-            "toggle_right":     self.toggle_right_panel,
-
-            # Right-panel formatting buttons
-            "exit":             lambda: self._exit_toolbar(),
-            "bullet":           lambda: self._extract_and_close("bullet"),
-            "h2":               lambda: self._extract_and_close("h2"),
-            "h1":               lambda: self._extract_and_close("h1"),
-            "bold":             lambda: self._extract_and_close("bold"),
-            "italic":           lambda: self._extract_and_close("italic"),
-            "normal":           lambda: self._extract_and_close("normal"),
-
-            # Left-panel utility buttons
-            "folder":           lambda: self.open_folder(self.app_data.get_folder_path()),
-            "file":             lambda: self.open_file(self.app_data.get_file_path()),
-            "chatbot":          lambda: print("chatbot"),
-            "summary":          lambda: self._extract_and_close("summary"),
-            "translator":       lambda: self._extract_and_close("translator"),
-            "snapshot":           lambda: self._extract_and_close("snapshot"),
-            "youtube":          lambda: self._extract_and_close("YT"),
-        }
-
-        
-        # ----------------------------------------------------------------
-        # Enable high dpi for clear gui
-        # ----------------------------------------------------------------
-        from ctypes import windll
-        try:
-            windll.shcore.SetProcessDpiAwareness(1)
-        except Exception:
-            windll.user32.SetProcessDPIAware()
-
-
-
-        # BUILD UI
-        self.create_main_background()
-
-        self.create_toggler_buttons()
-
-        self.create_left_panel()
-
-        self.create_right_panel()
-
-
-        for obj in self.main_bg_items:
-            self.canvas.tag_raise(obj)
-            
-
-        if self.app_data.get_Toogle_left():
-            # simulate toggle left
-            # trick: to run it successfully, ensure last btn is hidden so it expands
-            self.toggle_left_panel()
-
-        if self.app_data.get_Toogle_right():
-            self.toggle_right_panel()
-
-        self.enable_dragging()
-
-    # -------------------------------------------------------------------------
-    def _build_window(self, troot):
-        win = tk.Toplevel(troot)
-        center_x = int((self.screen_w - self.width) / 2)
-        win.geometry(f"{self.width}x{self.height}+{center_x}+0")
-        win.overrideredirect(True)
-        win.wm_attributes("-transparentcolor", "#D9D9DA")
-        win.wm_attributes("-topmost", True)
-
-        try:
-            if "win" in win.tk.call('tk', 'windowingsystem').lower():
-                hwnd = ctypes.windll.user32.GetParent(win.winfo_id())
-                GWL_EXSTYLE = -20
-                WS_EX_NOACTIVATE = 0x08000000
-                style = ctypes.windll.user32.GetWindowLongW(hwnd, GWL_EXSTYLE)
-                ctypes.windll.user32.SetWindowLongW(hwnd, GWL_EXSTYLE,
-                                                    style | WS_EX_NOACTIVATE)
-        except:
-            print("[INFO] Couldn't apply no-focus mode")
-        return win
-
-    # -------------------------------------------------------------------------
-    def _build_canvas(self):
-        canvas = Canvas(
-            self.root,
-            bg="#D9D9DA",
-            width=self.width,
-            height=self.height,
-            bd=0,
-            highlightthickness=0,
-            relief="ridge"
-        )
-
-
-        canvas.place(x=0, y=0)
-       
-        return canvas
-
     # -------------------------------------------------------------------------
     # MAIN CENTER BACKGROUND
     # -------------------------------------------------------------------------
@@ -377,3 +247,136 @@ class SpectraToolbar:
         # self.root.mainloop()
         self.root.wait_window() # using this as thr root is obj with Toplevel not Tk
 
+
+
+    def __init__(self, app_data, loader, layout, troot):
+
+        self.app_data = app_data
+        self.loader = loader
+        self.layout = layout
+
+        self.width = layout.measurements["width"]
+        self.height = layout.measurements["height"]
+        self.screen_w = layout.measurements["screen_w"]
+        self.screen_h = layout.measurements["screen_h"]
+        self.scale = layout.measurements["scale"]
+        self.base_w = layout.measurements["base_width"]
+        self.base_h = layout.measurements["base_height"]
+
+
+        # layout positions
+        self.toogler_positions = layout.positions["Toogler"]
+        self.left_positions = layout.positions["Left_panel"]
+        self.right_positions = layout.positions["Right_panel"]
+
+        self.root = self._build_window(troot)
+
+        self.canvas = self._build_canvas()
+
+
+        # storing UI elements
+        self.main_bg_items = []
+        self.left_objs = {"bg": {}, "button": {}}
+        self.right_objs = {"bg": {}, "button": {}}
+        self.toggle_buttons = {}
+
+        # Created dictionary of actions
+        self.actions = {
+            # toggle buttons
+            "toggle_left":      self.toggle_left_panel,
+            "toggle_right":     self.toggle_right_panel,
+
+            # Right-panel formatting buttons
+            "exit":             lambda: self._exit_toolbar(),
+            "bullet":           lambda: self._extract_and_close("bullet"),
+            "h2":               lambda: self._extract_and_close("h2"),
+            "h1":               lambda: self._extract_and_close("h1"),
+            "bold":             lambda: self._extract_and_close("bold"),
+            "italic":           lambda: self._extract_and_close("italic"),
+            "normal":           lambda: self._extract_and_close("normal"),
+
+            # Left-panel utility buttons
+            "folder":           lambda: self.open_folder(self.app_data.get_folder_path()),
+            "file":             lambda: self.open_file(self.app_data.get_file_path()),
+            "chatbot":          lambda: print("chatbot"),
+            "summary":          lambda: self._extract_and_close("summary"),
+            "translator":       lambda: self._extract_and_close("translator"),
+            "snapshot":           lambda: self._extract_and_close("snapshot"),
+            "youtube":          lambda: self._extract_and_close("YT"),
+        }
+
+        
+        # ----------------------------------------------------------------
+        # Enable high dpi for clear gui
+        # ----------------------------------------------------------------
+        from ctypes import windll
+        try:
+            windll.shcore.SetProcessDpiAwareness(1)
+        except Exception:
+            windll.user32.SetProcessDPIAware()
+
+
+
+        # BUILD UI
+        self.create_main_background()
+
+        self.create_toggler_buttons()
+
+        self.create_left_panel()
+
+        self.create_right_panel()
+
+
+        for obj in self.main_bg_items:
+            self.canvas.tag_raise(obj)
+            
+
+        if self.app_data.get_Toogle_left():
+            # simulate toggle left
+            # trick: to run it successfully, ensure last btn is hidden so it expands
+            self.toggle_left_panel()
+
+        if self.app_data.get_Toogle_right():
+            self.toggle_right_panel()
+
+        self.enable_dragging()
+
+    # -------------------------------------------------------------------------
+    def _build_window(self, troot):
+        win = tk.Toplevel(troot)
+        center_x = int((self.screen_w - self.width) / 2)
+        win.geometry(f"{self.width}x{self.height}+{center_x}+0")
+        win.overrideredirect(True)
+        win.wm_attributes("-transparentcolor", "#D9D9DA")
+        win.wm_attributes("-topmost", True)
+
+        try:
+            if "win" in win.tk.call('tk', 'windowingsystem').lower():
+                hwnd = ctypes.windll.user32.GetParent(win.winfo_id())
+                GWL_EXSTYLE = -20
+                WS_EX_NOACTIVATE = 0x08000000
+                style = ctypes.windll.user32.GetWindowLongW(hwnd, GWL_EXSTYLE)
+                ctypes.windll.user32.SetWindowLongW(hwnd, GWL_EXSTYLE,
+                                                    style | WS_EX_NOACTIVATE)
+        except:
+            print("[INFO] Couldn't apply no-focus mode")
+        return win
+
+    # -------------------------------------------------------------------------
+    def _build_canvas(self):
+        canvas = Canvas(
+            self.root,
+            bg="#D9D9DA",
+            width=self.width,
+            height=self.height,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
+
+
+        canvas.place(x=0, y=0)
+       
+        return canvas
+
+    

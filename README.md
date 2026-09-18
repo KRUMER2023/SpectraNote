@@ -1,6 +1,7 @@
 
 
-# <img width="56" height="56" alt="icon" src="https://github.com/user-attachments/assets/8e108c95-2be7-424a-b484-47f3887a38b5" />  SpectraNote : Your floating capture assistant
+<!-- # <img width="56" height="56" alt="icon" src="https://github.com/user-attachments/assets/8e108c95-2be7-424a-b484-47f3887a38b5" />  SpectraNote : Your floating capture assistant -->
+# <img width="56" height="56" alt="icon" src="public_images/logo.png" />  SpectraNote : Your floating capture assistant
 
 **The Ultimate Desktop Productivity & Research Companion**
 
@@ -12,7 +13,7 @@ SpectraNote is a high-performance, non-intrusive floating desktop application de
 
 Traditional research requires constant context switching—copying text, alt-tabbing to Word, pasting, formatting, and repeating. SpectraNote eliminates this friction. With a sleek, transparent floating toolbar that never steals window focus, you can shoot text, formatted notes, screenshots, and YouTube links directly into your target `.docx` file on the fly.
 
-<img width="131" height="73" alt="UI_Collapsed" src="https://github.com/user-attachments/assets/570f476e-e293-4a77-875d-f546b2914e07" />
+<img width="131" height="73" alt="UI_Collapsed" src="https://github.com/user-attachments/assets/570f476e-e293-4a77-875d-f546b2914e07" /><br>
 <img width="892" height="77" alt="UI_UnCollapsed" src="https://github.com/user-attachments/assets/fdb37d76-23b7-4515-8c88-f6bcc9541428" />
 
 

@@ -7,6 +7,10 @@ import requests
 import os
 import tkinter as tk
 from tkinter import messagebox, Checkbutton, IntVar, Button, Label, Frame, Canvas, Scrollbar
+from dotenv import load_dotenv
+# # Load environment variables from .env file
+load_dotenv()
+
 
 API_KEY = os.getenv('YOUTUBE_API_KEY')
 BASE_URL = "https://www.googleapis.com/youtube/v3/search"
