@@ -8,3 +8,6 @@ Pillow
 pygetwindow
 pyrect
 python-dotenv
+onnxruntime
+transformers
+sentencepiece

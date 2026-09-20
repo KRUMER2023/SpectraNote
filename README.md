@@ -77,7 +77,7 @@ SpectraNote floats silently above your open windows. You simply highlight text o
 | 👻 **Ghost HUD Window (`WS_EX_NOACTIVATE`)** | Borderless, transparent floating toolbar built with low-level Win32 hooks that **never steals focus** from your browser or PDF reader. |
 | ✍️ **1-Click Semantic Word Formatting** | Instantly appends selected text as `Normal`, `Heading 1`, `Heading 2`, `Bold`, `Italic`, `Underline`, or `List Bullet` into your document. |
 | ✂️ **Multi-Shape Snipping Tool** | Built-in high-resolution screen capture supporting **Rectangular**, **Circular**, and **Freehand Lasso** selections with automatic alpha-masking and Word insertion. |
-| 📺 **YouTube Research Injector** | Pulls related video suggestions based on selected text, displays thumbnails, and inserts clickable OpenXML hyperlinks (`w:hyperlink`) directly into your notes. |
+| 📺 **YouTube Research Injector** | Pulls real-time video suggestions with **zero API keys** via direct Innertube querying. Features a responsive preview modal with live browser preview (`↗`) and structured `- Title \|\| Channel` document formatting. |
 | 🌐 **Instant Web Search** | Automatically captures highlighted terms and launches focused web search queries in your default browser. |
 | 🔄 **In-Flight Note Switching (`new_note`)** | Switch destination documents or generate a fresh note file mid-session without restarting the engine. |
 | 🖥️ **Adaptive Multi-Monitor Scaling** | Automatically reads monitor bounds via `screeninfo` and clamps drag boundaries seamlessly across displays. |
@@ -124,17 +124,25 @@ SpectraNote is engineered around a **Decoupled 3-Layer Modular Architecture** co
 * **The Problem**: `python-docx` lacks out-of-the-box support for generating interactive, styled hyperlinks in document paragraphs without raw XML.
 * **The Solution**: We built a custom OpenXML injection utility (`doc_task/hyperlink_helper.py`) that binds document relationships directly:
   ```python
+  # Formats run with clean modern blue (#1D4ED8) and single underline
   r_id = part.relate_to(url, 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink', is_external=True)
   hyperlink = OxmlElement('w:hyperlink')
   hyperlink.set(qn('r:id'), r_id)
-  # Formats run with blue color (#0000FF) and single underline
   ```
 
 ---
 
-### 4. Zero-Key YouTube Suggestion Integration
-* **The Problem**: Requiring users to configure a Google Cloud Console account and generate a YouTube Data API Key adds massive friction for non-technical users.
-* **The Solution**: We decoupled the YouTube Suggestion Engine into a multi-tiered provider architecture that queries YouTube's public web endpoints with zero API keys required, while feeding structured results into a modular preview popup.
+### 4. Zero-Key YouTube Encapsulation & Rich Formatter
+* **The Problem**: Requiring users to configure a Google Cloud Console account and generate API keys creates massive onboarding friction. Furthermore, raw URLs appended to documents lacked context (titles, channels).
+* **The Solution**: 
+  1. We encapsulated the search engine using YouTube's direct public Innertube endpoint (`/youtubei/v1/search`), achieving keyless suggestions with thumbnail and channel metadata.
+  2. Built a responsive, mouse-resizable preview dialog with an instant `↗` browser launcher.
+  3. Structured Word output to include bold title headers, author channels, and cleanly indented hyperlinks:
+     ```text
+     YouTube Suggestions for 'QUERY':
+     - VIDEO_TITLE   ||  CHANNEL_NAME
+         https://www.youtube.com/watch?v=...
+     ```
 
 ---
 
@@ -149,6 +157,8 @@ SpectraNote is engineered around a **Decoupled 3-Layer Modular Architecture** co
 ```text
 SpectraNote/
 ├── 📜 runner.py                    # Main Lifecycle & State-Return Engine
+├── 🚀 app.bat                      # Silent launcher for SpectraNote
+├── 🐛 app_with_log_window.bat      # Debug launcher (shows terminal logs)
 ├── 📦 appdata.py                   # Central State Management & Path Config
 ├── 📋 requirements                 # Project Dependency Declarations
 ├── 🔒 .env.example                 # Environment Variable Template
@@ -156,6 +166,7 @@ SpectraNote/
 ├── 🧠 handlers/                    # Action & Business Logic Handlers
 │   ├── __init__.py
 │   ├── yt_handler.py               # YouTube Search & Link Injection Orchestrator
+│   ├── summary_handler.py          # On-Device T5 Abstractive Summarization Orchestrator
 │   └── web_search_handler.py       # Instant Web Search Dispatcher
 │
 ├── 🎨 gui/                         # Pure Presentation & UI Components
@@ -174,6 +185,7 @@ SpectraNote/
 ├── 📄 doc_task/                    # Document Manipulation & OpenXML Suite
 │   ├── doc_manager.py              # Word File Creation & Validation
 │   ├── operation.py                # Paragraph Styler (H1, H2, Bold, Italic, Bullet)
+│   ├── summary_helper.py           # Word Summary Paragraph Generator
 │   ├── hyperlink_helper.py         # OpenXML Hyperlink & URL Appender
 │   └── text_extractor.py           # Native Clipboard Extraction Driver
 │
@@ -200,7 +212,7 @@ SpectraNote/
 | 📁 | **Open Folder** | Opens the folder containing your active `.docx` file in Windows Explorer. |
 | 📄 | **Open File** | Instantly launches the active `.docx` file in Microsoft Word. |
 | 📝 | **New Note** | Opens the workspace selector to switch or create another document. |
-| ⚡ | **Summary** | *(Upcoming)* AI-driven document summarization. |
+| ⚡ | **Summary** | Generates an on-device abstractive summary of highlighted text and injects it into your document. |
 | 🌐 | **Web Search** | Encodes highlighted text and triggers a browser web search. |
 | ✂️ | **Snapshot** | Launches the multi-shape snipping tool to capture and embed images. |
 | ▶️ | **YouTube** | Searches YouTube for highlighted text and embeds chosen video links. |
@@ -249,9 +261,13 @@ pip install -r requirements
 ```
 
 ### 4. Launch SpectraNote
+You can launch the app directly using Python:
 ```bash
 python runner.py
 ```
+**Alternatively, use the provided batch launchers (Windows):**
+- **`app.bat`**: Launches SpectraNote silently in the background (no terminal window).
+- **`app_with_log_window.bat`**: Launches SpectraNote with a visible terminal for debugging and viewing logs.
 
 ---
 
@@ -261,13 +277,10 @@ python runner.py
 - [x] **In-Flight Document Switching (`new_note`)**
 - [x] **Multi-Shape Screen Capture with Alpha Masks**
 - [x] **Native OpenXML Hyperlink Generation**
-- [ ] **Context-Aware AI Assistant (Sidebar Copilot)**
+- [x] **On-Device T5 Abstractive Summarization**
+- [ ] **Next-Gen Modern Web UI Framework Transition**
+- [ ] **Live side by side word file editing as currently `doc_task` not work when word file is open** 
 - [ ] **Real-Time Text Translation before Document Injection**
+- [ ] **Context-Aware AI Assistant (Sidebar Copilot)**
 - [ ] **Cloud Workspace Sync (Google Docs & Notion API Integration)**
-- [ ] **Next-Gen Modern UI Framework Transition**
 
----
-
-<div align="center">
-  <sub>Crafted with ❤️ for streamlined research & frictionless note-taking.</sub>
-</div>

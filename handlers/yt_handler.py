@@ -1,50 +1,95 @@
-import os
 import requests
 import tkinter as tk
 from tkinter import messagebox
-from dotenv import load_dotenv
 
 from gui.gui_yt_selector import show_yt_selector
 from doc_task.hyperlink_helper import append_yt_links_to_doc
 
-# Load environment variables
-load_dotenv()
-
-API_KEY = os.getenv('YOUTUBE_API_KEY')
-BASE_URL = "https://www.googleapis.com/youtube/v3/search"
+INNERTUBE_URL = "https://www.youtube.com/youtubei/v1/search"
 
 
 def fetch_yt_suggestions(query: str, max_results: int = 4):
     """
-    Fetch top YouTube video suggestions for the query using YouTube Data API v3.
+    Fetch top YouTube video suggestions for the query using YouTube's direct
+    Innertube public endpoint without requiring any external API keys.
     """
-    if not API_KEY:
-        raise ValueError("YOUTUBE_API_KEY environment variable is not set. Please check your .env file.")
-    
-    params = {
-        'part': 'snippet',
-        'q': query,
-        'type': 'video',
-        'order': 'relevance',
-        'maxResults': max_results,
-        'key': API_KEY
+    payload = {
+        "context": {
+            "client": {
+                "clientName": "WEB",
+                "clientVersion": "2.20231201.00.00"
+            }
+        },
+        "query": query
     }
-    response = requests.get(BASE_URL, params=params)
-    if response.status_code != 200:
-        raise ValueError(f"API error: {response.text}")
-    data = response.json()
-    if 'error' in data:
-        raise ValueError(f"API error: {data['error']['message']}")
-    return data.get('items', [])
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Content-Type": "application/json"
+    }
+
+    try:
+        response = requests.post(INNERTUBE_URL, json=payload, headers=headers, timeout=8)
+        if response.status_code != 200:
+            raise ValueError(f"HTTP {response.status_code}: {response.text[:200]}")
+        
+        data = response.json()
+    except Exception as err:
+        raise ValueError(f"Failed to query YouTube search endpoint: {err}")
+
+    items = []
+    contents = (
+        data.get("contents", {})
+            .get("twoColumnSearchResultsRenderer", {})
+            .get("primaryContents", {})
+            .get("sectionListRenderer", {})
+            .get("contents", [])
+    )
+
+    for section in contents:
+        item_section = section.get("itemSectionRenderer", {}).get("contents", [])
+        for item in item_section:
+            video = item.get("videoRenderer")
+            if video and len(items) < max_results:
+                video_id = video.get("videoId")
+                if not video_id:
+                    continue
+
+                # Extract title
+                title_runs = video.get("title", {}).get("runs", [])
+                title = "".join([r.get("text", "") for r in title_runs]) if title_runs else "Untitled Video"
+
+                # Extract channel / author name
+                owner_runs = video.get("ownerText", {}).get("runs") or video.get("shortBylineText", {}).get("runs")
+                channel_name = owner_runs[0].get("text", "") if owner_runs else ""
+
+                # Extract highest quality thumbnail
+                thumbnails = video.get("thumbnail", {}).get("thumbnails", [])
+                thumb_url = thumbnails[-1].get("url") if thumbnails else ""
+                if thumb_url and thumb_url.startswith("//"):
+                    thumb_url = "https:" + thumb_url
+
+                items.append({
+                    "id": {"videoId": video_id},
+                    "snippet": {
+                        "title": title,
+                        "channelTitle": channel_name,
+                        "thumbnails": {
+                            "medium": {"url": thumb_url},
+                            "default": {"url": thumb_url}
+                        }
+                    }
+                })
+
+    return items
 
 
 def handle_yt_from_text(app_data, text: str):
     """
     Main handler for YouTube workflow:
     1. Validates text
-    2. Fetches video suggestions
-    3. Displays UI selector dialog
-    4. Inserts selected links into the document
+    2. Fetches video suggestions (keyless)
+    3. Displays UI selector dialog with direct preview link
+    4. Inserts rich selected video links into the document
     """
     query = text.strip()
     if not query:
@@ -57,9 +102,9 @@ def handle_yt_from_text(app_data, text: str):
             messagebox.showinfo("No Results", "No YouTube suggestions found.")
             return
 
-        def on_submit(urls: list, is_all: bool):
+        def on_submit(video_entries: list, is_all: bool):
             try:
-                append_yt_links_to_doc(app_data, urls, query)
+                append_yt_links_to_doc(app_data, video_entries, query)
                 messagebox.showinfo(
                     "Success",
                     f"Added {'all' if is_all else 'selected'} YouTube suggestions to notes!"
@@ -71,4 +116,4 @@ def handle_yt_from_text(app_data, text: str):
         show_yt_selector(items, query, on_submit)
 
     except Exception as e:
-        messagebox.showerror("YouTube Error", f"Failed to fetch suggestions:\n{e}")
+        messagebox.showerror("YouTube Error", f"Failed to fetch suggestions: {e}")

@@ -60,6 +60,7 @@ def main():
         app.run()
 
         print("\n[INFO] Return from the note bar main funtion...")
+        
         print("[INFO] Going for the state extraction and implementation...")
 
         state = app_data.get_style()
@@ -77,13 +78,14 @@ def main():
             print(f"[INFO] Current note file is now: {app_data.get_file_path()}")
             continue
 
-        if state == "snapshot":
+        elif state == "snapshot":
             from SnapShot_task.SS_auto_doc_appending import ModernSnippingTool
             # Instantiate tool (it creates its own Toplevel internally)
             snip_app = ModernSnippingTool(app_data.get_folder_path(), app_data.get_file_name())
             # Wait for the snipping tool's internal root window to close
             root.wait_window(snip_app.root)
             continue
+
         # print("[INFO] Started text extract")
         # Extract selected text
         print(f"\n[INFO] Going for the text extraction with state = {state} ...")
@@ -91,11 +93,6 @@ def main():
         if text is None: continue
 
         print(f"[INFO] Text extraction ended with state = {state} ...")
-
-
-        # TODO : Implement for the other states:
-        #   translator
-        #   summary
 
         if state == "YT":
 
@@ -111,6 +108,13 @@ def main():
             from handlers.web_search_handler import handle_web_search_from_text
 
             handle_web_search_from_text(text.strip())
+
+        elif state == "summary":
+
+            # Handle abstractive summary using extracted text
+            from handlers.summary_handler import handle_summary_from_text
+
+            handle_summary_from_text(app_data, text.strip())
 
         else:
             # if none of the above state, then the callback is for appending the text so apply_operation used
