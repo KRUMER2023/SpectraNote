@@ -1,5 +1,7 @@
+# from gui.gui_runner import appdata
 import tkinter as tk
 from tkinter import Button, Canvas
+from gui.gui_destination_selector import start_folder_selection
 import ctypes
 import os
 
@@ -9,7 +11,7 @@ class SpectraToolbar:
     # MAIN CENTER BACKGROUND
     # -------------------------------------------------------------------------
     def create_main_background(self):
-        for name in self.toogler_positions["bg"].keys():
+        for name in self.toggler_positions["bg"].keys():
             if name == "trans_bg":
                 continue
             img = self.canvas.create_image(
@@ -23,7 +25,7 @@ class SpectraToolbar:
     # TOGGLER BUTTONS
     # -------------------------------------------------------------------------
     def create_toggler_buttons(self):
-        for name, pos in self.toogler_positions["button"].items():
+        for name, pos in self.toggler_positions["button"].items():
             x, y = pos
             btn = Button(
                 self.root,
@@ -104,7 +106,7 @@ class SpectraToolbar:
             for b in self.left_objs["button"].values(): b.place_forget()
             for bg in self.left_objs["bg"].values():
                 self.canvas.itemconfigure(bg, state="hidden")
-            self.app_data.set_Toogle_left(False)
+            self.app_data.set_toggle_left(False)
         else:
             self.toggle_buttons["toggle_left"].configure(
                 image=self.loader.images["toggle_right"]
@@ -117,7 +119,7 @@ class SpectraToolbar:
                     x=x*self.scale, y=y*self.scale,
                     width=42*self.scale, height=46*self.scale
                 )
-            self.app_data.set_Toogle_left(True)
+            self.app_data.set_toggle_left(True)
 
     def toggle_right_panel(self):
         keys = list(self.right_objs["button"].keys())
@@ -130,7 +132,7 @@ class SpectraToolbar:
             for b in self.right_objs["button"].values(): b.place_forget()
             for bg in self.right_objs["bg"].values():
                 self.canvas.itemconfigure(bg, state="hidden")
-            self.app_data.set_Toogle_right(False)
+            self.app_data.set_toggle_right(False)
         else:
             self.toggle_buttons["toggle_right"].configure(
                 image=self.loader.images["toggle_left"]
@@ -143,7 +145,7 @@ class SpectraToolbar:
                     x=x*self.scale, y=y*self.scale,
                     width=42*self.scale, height=46*self.scale
                 )
-            self.app_data.set_Toogle_right(True)
+            self.app_data.set_toggle_right(True)
 
     # -------------------------------------------------------------------------
     # DRAGGING (Copied from gui_main_circle.py with same calculations)
@@ -232,8 +234,7 @@ class SpectraToolbar:
             os.startfile(file_path)
         else:
             tk.messagebox.showwarning("No File", "No notes file currently open!")
-
-
+    
     def _extract_and_close(self, style):
         self.app_data.set_style(style)
         self.root.destroy()
@@ -265,7 +266,7 @@ class SpectraToolbar:
 
 
         # layout positions
-        self.toogler_positions = layout.positions["Toogler"]
+        self.toggler_positions = layout.positions["Toggler"]
         self.left_positions = layout.positions["Left_panel"]
         self.right_positions = layout.positions["Right_panel"]
 
@@ -298,10 +299,10 @@ class SpectraToolbar:
             # Left-panel utility buttons
             "folder":           lambda: self.open_folder(self.app_data.get_folder_path()),
             "file":             lambda: self.open_file(self.app_data.get_file_path()),
-            "chatbot":          lambda: print("chatbot"),
+            "new_note":         lambda: self._extract_and_close("new_note"),
             "summary":          lambda: self._extract_and_close("summary"),
-            "translator":       lambda: self._extract_and_close("translator"),
-            "snapshot":           lambda: self._extract_and_close("snapshot"),
+            "web_search":       lambda: self._extract_and_close("web_search"),
+            "snapshot":         lambda: self._extract_and_close("snapshot"),
             "youtube":          lambda: self._extract_and_close("YT"),
         }
 
@@ -331,12 +332,12 @@ class SpectraToolbar:
             self.canvas.tag_raise(obj)
             
 
-        if self.app_data.get_Toogle_left():
+        if self.app_data.get_toggle_left():
             # simulate toggle left
             # trick: to run it successfully, ensure last btn is hidden so it expands
             self.toggle_left_panel()
 
-        if self.app_data.get_Toogle_right():
+        if self.app_data.get_toggle_right():
             self.toggle_right_panel()
 
         self.enable_dragging()

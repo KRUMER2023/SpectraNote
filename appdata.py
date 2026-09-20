@@ -12,9 +12,9 @@ class AppData:
         self.folder_path = ""
         self.style = ""
         
-        # Panel toogle flags
-        self.Toogle_left = False
-        self.Toogle_right = False
+        # Panel toggle flags
+        self.toggle_left = False
+        self.toggle_right = False
 
     # ---------- setters ----------
     def set_file_name(self, name): 
@@ -24,10 +24,10 @@ class AppData:
     def set_style(self, style): 
         self.style = style
         
-    def set_Toogle_left(self, state):
-        self.Toogle_left = state
-    def set_Toogle_right(self, state):
-        self.Toogle_right = state
+    def set_toggle_left(self, state):
+        self.toggle_left = state
+    def set_toggle_right(self, state):
+        self.toggle_right = state
 
     # ---------- getters ----------
     def get_file_name(self): 
@@ -37,10 +37,10 @@ class AppData:
     def get_style(self): 
         return self.style
         
-    def get_Toogle_left(self):
-        return self.Toogle_left
-    def get_Toogle_right(self):
-        return self.Toogle_right
+    def get_toggle_left(self):
+        return self.toggle_left
+    def get_toggle_right(self):
+        return self.toggle_right
 
     def get_file_path(self):
         return self.folder_path + "/" + self.file_name

@@ -54,10 +54,8 @@ def proceed(app_data, choice_var, folder_var, file_name_var, existing_file_var, 
             messagebox.showerror("Error", f"Failed to create file:\n{e}")
             return
 
-
-        # Appdata obeject , setter methods used to set file/folder loc 
+        # Appdata object, setter methods used to set file/folder loc 
         app_data.set_folder_path(os.path.dirname(full_path))
-        # app_data.set_file_name(file_name + ".docx")
         app_data.set_file_name(os.path.basename(full_path))
 
         messagebox.showinfo("Success", f"New file created:\n{full_path}")
@@ -69,7 +67,7 @@ def proceed(app_data, choice_var, folder_var, file_name_var, existing_file_var, 
             messagebox.showwarning("Invalid File", "Please select a valid DOCX file.")
             return
 
-        # Appdata obeject , setter methods used to set file/folder loc 
+        # Appdata object, setter methods used to set file/folder loc 
         app_data.set_folder_path(os.path.dirname(file_path))
         app_data.set_file_name(os.path.basename(file_path))
 
@@ -77,17 +75,29 @@ def proceed(app_data, choice_var, folder_var, file_name_var, existing_file_var, 
         root.destroy()
 
 
+def start_folder_selection(app_data, parent=None, is_startup=False):
+    """
+    Shows the destination selection UI.
+    
+    :param app_data: AppData global state instance.
+    :param parent: Optional Tk parent window. If provided, uses Toplevel.
+    :param is_startup: If True, closing the window without selection exits the application.
+    """
+    if parent is not None:
+        root = tk.Toplevel(parent)
+    else:
+        root = tk.Tk()
 
-def start_folder_selection(app_data):
-    root = tk.Tk()
     root.title("NoteItUp - Select File")
     root.geometry("600x250")
     root.configure(bg="white")
+    root.resizable(False, False)
 
     # Handle window close (X button)
     def on_close():
         root.destroy()
-        sys.exit(0)  # exit whole program if window closed
+        if is_startup:
+            sys.exit(0)  # exit whole program if window closed on initial startup
 
     root.protocol("WM_DELETE_WINDOW", on_close)
 
@@ -130,4 +140,8 @@ def start_folder_selection(app_data):
     )
     proceed_btn.grid(row=4, column=1, pady=20)
 
-    root.mainloop()
+    if parent is not None:
+        root.grab_set()
+        root.wait_window()
+    else:
+        root.mainloop()

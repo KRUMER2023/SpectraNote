@@ -9,7 +9,7 @@ class Layout:
 
         self.positions = {
             
-            "Toogler":
+            "Toggler":
             {   
                 "button":
                 {
@@ -55,9 +55,9 @@ class Layout:
                     # left panel
                     "folder":     ( 15*s, 12*s),
                     "file":       ( 69*s, 12*s),
-                    "chatbot":    (123*s, 12*s),
+                    "new_note":    (123*s, 12*s),
                     "summary":    (177*s, 12*s),
-                    "translator": (231*s, 12*s),
+                    "web_search": (231*s, 12*s),
                     "snapshot":     (285*s, 12*s),
                     "youtube":    (339*s, 12*s)
                 },

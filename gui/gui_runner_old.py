@@ -131,12 +131,12 @@ class SpectraToolbar:
             self.right_buttons.append(btn)
 
         # -----------------------------
-        # Left Panel Buttons (folder, file, chatbot, summary...)
+        # Left Panel Buttons (folder, file, new_note, summary...)
         # -----------------------------
         left_list = [
             ("folder",     lambda: self.open_folder()),
             ("file",       lambda: self.open_file()),
-            ("chatbot",    lambda: print("Chatbot Feature (coming soon)")),
+            ("new_note",   lambda: print("New Note Feature (coming soon)")),
             ("summary",    lambda: print("Summarizer (coming soon)")),
             ("translator", lambda: print("Translator (coming soon)")),
             ("search",     lambda: print("Search (coming soon)")),
