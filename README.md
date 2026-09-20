@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="public_images/logo.png" alt="SpectraNote Logo" width="125" height="125" style="border-radius: 50%;" />
+  <img src="public_images/logo.png" alt="SpectraNote Logo" />
 
   # SpectraNote
   ### *The Invisible Bridge Between Your Active Workspace and Notes*
