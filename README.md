@@ -157,11 +157,12 @@ SpectraNote is engineered around a **Decoupled 3-Layer Modular Architecture** co
 ```text
 SpectraNote/
 ├── 📜 runner.py                    # Main Lifecycle & State-Return Engine
-├── 🚀 app.bat                      # Silent launcher for SpectraNote
-├── 🐛 app_with_log_window.bat      # Debug launcher (shows terminal logs)
+├── 🛠️ setup.bat                    # Automated setup script (creates .venv & installs dependencies)
+├── 🚀 app.bat                      # Silent launcher for SpectraNote (runs setup.bat automatically)
+├── 🐛 app_with_log_window.bat      # Debug launcher (shows terminal logs & runs setup.bat)
 ├── 📦 appdata.py                   # Central State Management & Path Config
-├── 📋 requirements                 # Project Dependency Declarations
-├── 🔒 .env.example                 # Environment Variable Template
+├── 📋 requirements.txt             # Project Dependency Declarations
+├── 📄 LICENSE                      # MIT Open Source License
 │
 ├── 🧠 handlers/                    # Action & Business Logic Handlers
 │   ├── __init__.py
@@ -249,25 +250,28 @@ git clone https://github.com/yourusername/SpectraNote.git
 cd SpectraNote
 ```
 
-### 2. Set Up a Virtual Environment
+### 2. Automatic One-Click Launch (Recommended)
+Simply double-click **`app.bat`** (silent launch) or **`app_with_log_window.bat`** (debug launch with logs).
+> 💡 Both batch files automatically call **`setup.bat`**, which creates the `.venv` virtual environment and installs all dependencies on the first run!
+
+### 3. Manual Setup & Launch
+If you prefer setting up manually:
 ```bash
+# Run automated setup script
+setup.bat
+
+# Or step-by-step:
 python -m venv .venv
 .venv\Scripts\activate
-```
-
-### 3. Install Required Dependencies
-```bash
-pip install -r requirements
-```
-
-### 4. Launch SpectraNote
-You can launch the app directly using Python:
-```bash
+pip install -r requirements.txt
 python runner.py
 ```
-**Alternatively, use the provided batch launchers (Windows):**
-- **`app.bat`**: Launches SpectraNote silently in the background (no terminal window).
-- **`app_with_log_window.bat`**: Launches SpectraNote with a visible terminal for debugging and viewing logs.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 

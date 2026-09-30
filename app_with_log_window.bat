@@ -1,4 +1,5 @@
-app_with_log_window@echo off
-mode con: cols=75 lines=10
-call .venv\Scripts\activate.bat
+@echo off
+mode con: cols=85 lines=20
+call setup.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
 python runner.py
