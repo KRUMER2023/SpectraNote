@@ -60,7 +60,7 @@
 
   <br><br>
 
-  <i>Click the banner above to open the video presentation in Google Drive (HD 1080p).</i>
+  <i>Click the banner above to open the video presentation in Google Drive.</i>
 </div>
 
 ---
