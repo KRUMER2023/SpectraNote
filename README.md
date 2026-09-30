@@ -52,15 +52,20 @@
 ## 🎬 Live Video Demo
 
 <div align="center">
-  <p><strong>🍿 Experience SpectraNote in action — zero window switching note taking live:</strong></p>
-  
-  <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank">
-    <img src="https://img.shields.io/badge/▶%20WATCH%20FULL%20DEMO%20ON%20GOOGLE%20DRIVE-EA4335?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Video on Google Drive" height="45" />
-  </a>
+  <p><strong>🍿 Watch SpectraNote in action — zero window switching note taking live:</strong></p>
+
+  <!-- Native Inline Video Player on GitHub -->
+  <video src="public_images/demo.mp4" controls width="100%" poster="public_images/Expanded_UI.png">
+    Your browser does not support the video tag.
+  </video>
 
   <br><br>
 
-  <i>Click the banner above to open the video presentation in Google Drive (HD 1080p).</i>
+  <p>
+    <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank">
+      <img src="https://img.shields.io/badge/▶%20WATCH%20ON%20GOOGLE%20DRIVE%20(1080p)-EA4335?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch on Google Drive" />
+    </a>
+  </p>
 </div>
 
 ---
