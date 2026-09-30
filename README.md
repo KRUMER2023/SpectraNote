@@ -12,16 +12,20 @@
   <p align="center">
     <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.8+"></a>
     <a href="https://microsoft.com/word"><img src="https://img.shields.io/badge/Output-Microsoft%20Word%20(.docx)-2B579A?style=for-the-badge&logo=microsoftword&logoColor=white" alt="Word DOCX"></a>
+    <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank"><img src="https://img.shields.io/badge/🍿%20Watch%20Demo%20Video-Google%20Drive-FF0000?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Demo Video"></a>
     <a href="#"><img src="https://img.shields.io/badge/Platform-Windows%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows"></a>
     <a href="#"><img src="https://img.shields.io/badge/UI-Custom%20Tkinter%20HUD-FF6F00?style=for-the-badge" alt="Tkinter HUD"></a>
-    <a href="#"><img src="https://img.shields.io/badge/Architecture-State--Return%20Loop-00C853?style=for-the-badge" alt="Architecture"></a>
   </p>
 
   <br />
 
-  <img src="public_images/Expanded_UI.png" alt="SpectraNote Expanded Floating Toolbar" width="850" />
+  <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank" title="Click to watch full SpectraNote video demo on Google Drive">
+    <img src="public_images/Expanded_UI.png" alt="SpectraNote Expanded Floating Toolbar — Click to Watch Video Demo" width="850" />
+    <br><br>
+    <img src="https://img.shields.io/badge/▶%20CLICK%20TO%20WATCH%20FULL%20VIDEO%20DEMO-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Play Video" />
+  </a>
   
-  <p><sub><i>Fig 1.0: SpectraNote Full Floating Interface (Left Utilities • Center Drag/Toggle • Right Formatting)</i></sub></p>
+  <p><sub><i>Fig 1.0: SpectraNote Full Floating Interface (Click image or badge above to play full HD video demo on Google Drive)</i></sub></p>
 
   <img src="public_images/Collapsed_UI.png" alt="SpectraNote Collapsed Ghost Mode" width="140" />
   
@@ -33,6 +37,7 @@
 
 ## 🧭 Table of Contents
 
+- [🎬 Live Video Demo](#-live-video-demo)
 - [💡 The Problem & The Solution](#-the-problem--the-solution)
 - [✨ Key Features](#-key-features)
 - [🧩 Architecture & Design Decisions](#-architecture--design-decisions)
@@ -41,6 +46,22 @@
 - [🎮 Toolbar Controls & Cheatsheet](#-toolbar-controls--cheatsheet)
 - [🚀 Quickstart & Installation](#-quickstart--installation)
 - [🔮 Roadmap](#-roadmap)
+
+---
+
+## 🎬 Live Video Demo
+
+<div align="center">
+  <p><strong>🍿 Experience SpectraNote in action — zero window switching note taking live:</strong></p>
+  
+  <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank">
+    <img src="https://img.shields.io/badge/▶%20WATCH%20FULL%20DEMO%20ON%20GOOGLE%20DRIVE-EA4335?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Video on Google Drive" height="45" />
+  </a>
+
+  <br><br>
+
+  <i>Click the banner above to open the video presentation in Google Drive (HD 1080p).</i>
+</div>
 
 ---
 
