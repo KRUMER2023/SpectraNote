@@ -12,7 +12,7 @@
   <p align="center">
     <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.8+"></a>
     <a href="https://microsoft.com/word"><img src="https://img.shields.io/badge/Output-Microsoft%20Word%20(.docx)-2B579A?style=for-the-badge&logo=microsoftword&logoColor=white" alt="Word DOCX"></a>
-    <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank"><img src="https://img.shields.io/badge/🍿%20Watch%20Demo%20Video-Google%20Drive-FF0000?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Demo Video"></a>
+    <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank"><img src="https://img.shields.io/badge/%20Watch%20Demo%20Video-Google%20Drive-FF0000?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Demo Video"></a>
     <a href="#"><img src="https://img.shields.io/badge/Platform-Windows%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows"></a>
     <a href="#"><img src="https://img.shields.io/badge/UI-Custom%20Tkinter%20HUD-FF6F00?style=for-the-badge" alt="Tkinter HUD"></a>
   </p>
@@ -52,20 +52,15 @@
 ## 🎬 Live Video Demo
 
 <div align="center">
-  <p><strong>🍿 Watch SpectraNote in action — zero window switching note taking live:</strong></p>
-
-  <!-- Native Inline Video Player on GitHub -->
-  <video src="public_images/demo.mp4" controls width="100%" poster="public_images/Expanded_UI.png">
-    Your browser does not support the video tag.
-  </video>
+  <p><strong>Experience SpectraNote in action:</strong></p>
+  
+  <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank">
+    <img src="https://img.shields.io/badge/▶%20WATCH%20FULL%20DEMO%20ON%20GOOGLE%20DRIVE-EA4335?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch Video on Google Drive" height="45" />
+  </a>
 
   <br><br>
 
-  <p>
-    <a href="https://drive.google.com/file/d/1iwM51qbnESZ4b4w_bwFqe6I78PkHqfsY/view?usp=drive_link" target="_blank">
-      <img src="https://img.shields.io/badge/▶%20WATCH%20ON%20GOOGLE%20DRIVE%20(1080p)-EA4335?style=for-the-badge&logo=googledrive&logoColor=white" alt="Watch on Google Drive" />
-    </a>
-  </p>
+  <i>Click the banner above to open the video presentation in Google Drive (HD 1080p).</i>
 </div>
 
 ---
